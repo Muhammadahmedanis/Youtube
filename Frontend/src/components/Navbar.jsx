@@ -1,26 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { MdOutlineVideoCall } from "react-icons/md";
+import Upload from './upload';
+
+
 
 function Navbar() {
+    const[open, setOpen] = useState(false);
     const { currentUser } = useSelector(state => state.user);
+    const[query, setQuery] = useState('');
+    const navigate = useNavigate();
 
   return (
+    <>
     <Container>
         <Wrapper>
             <Search>
-                <Input type="text" placeholder='Search' />
-                <IoSearch />
+                <Input type="text" placeholder='Search' onChange={e => setQuery(e.target.value)}/>
+                <IoSearch onClick={() => navigate(`/search?query=${query}`)}/>
             </Search>
-           { currentUser ? ( <User> <MdOutlineVideoCall/> <Avatar src={currentUser?.img} /> {currentUser.name} </User> ) : <Link to="/signin" style={{textDecoration: "none"}}>
-                <Button><MdOutlineAccountCircle />SIGN IN</Button>
+           { currentUser ? ( <User> <MdOutlineVideoCall onClick={() => setOpen(true)} size={23}/> <Avatar src={currentUser?.img} /> {currentUser.name} </User> ) : <Link to="/signin" style={{textDecoration: "none"}}>
+                <Button><MdOutlineAccountCircle size={21}/>SIGN IN</Button>
             </Link>}
         </Wrapper>
     </Container>
+    {open && <Upload setOpen={setOpen} />}
+    </>
   )
 }
 
@@ -32,6 +41,7 @@ const User = styled.div`
     gap: 10px;
     font-weight: 500;
     color: ${({theme}) => theme.text};
+    cursor: pointer;
 `
 
 const Avatar = styled.img`
@@ -56,7 +66,7 @@ const Wrapper = styled.div`
     position: relative;
 `
 const Search = styled.div`
-    width: 40%;
+    width: 50%;
     // position: absolute;
     left: 0;
     right: 0;
@@ -67,10 +77,16 @@ const Search = styled.div`
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 3px;
+    color: ${({theme}) => theme.text};
+    cursor: pointer;
+    border-radius: 5px;
 `
 const Input = styled.input`
     border: none;
     background-color: transparent;
+    outline: none;
+    color: ${({theme}) => theme.text};
+    padding: 5px 10px;
 `
 const Button = styled.button `
     padding: 7px 15px;

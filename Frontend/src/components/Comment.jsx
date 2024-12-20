@@ -1,13 +1,27 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-function Comment() {
+function Comment({comment}) {
+    const[channel, setChannel] = useState([]);
+    useEffect(() => {
+        const fetchComment = async() => {
+        try {
+                const res = await axios.get(`/api/users/find/${comment.userId}`);
+                setChannel(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchComment();
+    }, [comment.userId])
+
   return (
     <Container>
-        <Avavatr src="https://yt3.ggpht.com/yti/APfAmoE-Q0ZLJ4vk3vqmV4Kwp0sbrjxLyB8Q4ZgNsiRH=s88-c-k-c0x00ffffff-no-rj-mo"/>
+        <Avavatr src={channel.img}/>
         <Deatils>
-            <Name>John Doe <Date>1 day ago</Date></Name>
-            <Text>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam similique, sapiente earum, enim totam voluptate, ex ullam quas molestiae hic repudiandae dolores</Text>
+            <Name>{channel.name}<Date>1 day ago</Date></Name>
+            <Text>{comment.desc}</Text>
         </Deatils>
     </Container>
   )

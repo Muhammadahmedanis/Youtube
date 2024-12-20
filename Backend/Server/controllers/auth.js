@@ -67,3 +67,12 @@ export const googleAuth = async(req, res, next) => {
         next(err);
     }
 }
+
+export const logout = (req, res, next) => {
+    try {
+        res.clearCookie("access_token", { path: "/" }); 
+        res.status(200).json({ message: "Logout successful" });
+    } catch (err) {
+        next(err)
+    }
+}

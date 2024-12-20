@@ -12,6 +12,7 @@ import{
 import Home from './pages/Home';
 import Video from './pages/Video';
 import Signin from './pages/Signin';
+import Search from './pages/Search';
 
 function App() {
   const[darkMode, setDarkMode] = useState(true)
@@ -28,6 +29,7 @@ function App() {
             <Route path="/" element={<Home type="random" />} />
             <Route path="trend" element={<Home type="trend" />} />
             <Route path="sub" element={<Home type="sub" />} />
+            <Route path="search" element={<Search />} />
             <Route path='signin' element={<Signin />}/>
             <Route path="video">
               <Route path=":id"element={<Video />} />
@@ -46,6 +48,7 @@ export default App
 const Container = styled.div`
   display: flex;
   width: 100%;
+  height: 100vh;
   background-color: ${({theme}) => theme.bg};
 `
 

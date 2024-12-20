@@ -14,6 +14,7 @@ import moment from 'moment';
 import { MdThumbUpAlt } from "react-icons/md";
 import { IoMdThumbsDown } from "react-icons/io";
 import { subscription } from '../../redux/userSlice.js';
+import Recommandation from '../components/Recommandation.jsx';
 
 let times = (time) => {
     let timestamp = moment(`${time}`);
@@ -66,22 +67,12 @@ function Video() {
     await axios.put(`/api/users/sub/${channel._id}`)
     dispatch(subscription(channel._id))
   }
-  console.log(currentUser.subscribedUsers);
-  
 
   return (
     <Container>
       <Content>
         <VideoWrapper>
-          <iframe
-            width='100%'
-            height='520'
-            src="https://www.youtube.com/embed/k3Vfj-e1Ma4"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          >
-          </iframe>
+          <VideoFrame src={currentVideo.videoUrl} controls></VideoFrame>
         </VideoWrapper>
         <Title>{currentVideo?.title}</Title>
         <Details>
@@ -112,20 +103,9 @@ function Video() {
             <Subscribe onClick={handleSubscribe}>{currentUser.subscribedUsers?.includes(channel._id) ? " SUBSCRIBED" : "SUBSCRIBE"}</Subscribe>
         </Channel>
         <Hr />
-        <Comments />
+        <Comments videoId={currentVideo._id}/>
       </Content>
-      {/* <Recommandation>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-
-      </Recommandation> */}
+      <Recommandation tags={currentVideo.tags} />
     </Container>
   )
 }
@@ -141,9 +121,7 @@ const Container = styled.div`
 const Content = styled.div`
   flex: 5;
 `
-const Recommandation = styled.div`
-  flex: 2;
-`
+
 
 const Channel = styled.div`
   display: flex;
@@ -229,4 +207,10 @@ const Buttons = styled.div`
 const Hr = styled.div`
   margin: 15px 0;
   border: 0.5px solid ${({ theme }) => theme.soft};
+`
+const VideoFrame = styled.video`
+  // max-height: 350px;
+  width: 100%;
+  object-fit: cover;
+
 `

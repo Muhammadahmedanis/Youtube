@@ -18,7 +18,7 @@ let times = (time) => {
 
 function Card({type, eachVideo}) {
     const[channel, setChannel] = useState({});
-    if(eachVideo.userId){
+    if(eachVideo?.userId){
         useEffect(() => {
             const fetchChannel = async () => {
                 const res = await axios.get(`api/users/find/${eachVideo?.userId}`);

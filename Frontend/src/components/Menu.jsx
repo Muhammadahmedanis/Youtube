@@ -17,10 +17,21 @@ import { MdOutlineSettingsBrightness } from "react-icons/md";
 import { MdOutlineArticle } from "react-icons/md";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../redux/userSlice';
+import axios from 'axios';
 
 function Menu({darkMode, setDarkMode}) {
     const { currentUser } = useSelector(state => state.user);
+    const dispatch = useDispatch();
+    const handleLogout = async() => {
+        try {
+            await axios.post("api/auth/logout")
+            dispatch(logout());
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
   return (
     <Container>
@@ -62,7 +73,7 @@ function Menu({darkMode, setDarkMode}) {
                 <Login>
                     Sign in to like videos, comment, and subscribe.
                     <Link to="/signin" style={{textDecoration: "none"}}>
-                        <Button><MdOutlineAccountCircle />SIGN IN</Button>
+                        <Button><MdOutlineAccountCircle size={21}/>SIGN IN</Button>
                     </Link>
                 </Login>
                 <Hr />
@@ -109,6 +120,10 @@ function Menu({darkMode, setDarkMode}) {
             <Item onClick={() => setDarkMode(!darkMode)}>
                 <MdOutlineSettingsBrightness />
                 {darkMode ? "Light": "Dark"} Mode      
+            </Item>
+            <Item onClick={handleLogout}>
+                <IoHelpCircleOutline />
+                Logout
             </Item>
         </Wrapper>
     </Container>
