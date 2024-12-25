@@ -46,7 +46,12 @@ Mongoose for schema modeling and query building.
 
 1: Clone the repository
 ```bash
-  git clone <repository-url> cd Frontend/Backend
+  git clone <repository-url> 
+```
+```bash
+  cd Frontend
+      &
+  cd Backend
 ```
 2: install dependencies
 ```bash
