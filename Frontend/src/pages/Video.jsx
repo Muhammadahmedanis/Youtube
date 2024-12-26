@@ -138,7 +138,7 @@ const ChannelInfo = styled.div`
 
 const Image = styled.img`
   height: 50px;
-  width: 50px;
+  min-width: 50px;
   border-radius: 50%;
 `
 
@@ -209,8 +209,10 @@ const Hr = styled.div`
   border: 0.5px solid ${({ theme }) => theme.soft};
 `
 const VideoFrame = styled.video`
-  // max-height: 350px;
+  max-height: 400px;
   width: 100%;
   object-fit: cover;
-
+  @media(max-width: 600px){
+    max-height: 280px;
+  }
 `

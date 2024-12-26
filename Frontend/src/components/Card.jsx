@@ -54,6 +54,7 @@ const Container = styled.div`
     margin-bottom: ${(props) => props.type === "sm" ? "10px" : "40px"};
     cursor: pointer;
     display: ${(props) => props.type === "sm" && "flex"};
+    flex-direction: column;
     gap: 10px;
 `
 
@@ -77,7 +78,7 @@ const ChannelImage = styled.img`
     display: ${(props) => props.type === "sm" && "none"};
 `
 const Text = styled.div`
-
+    margin-left: 5px;
 `
 const Title = styled.h1`
     font-size: 16px;

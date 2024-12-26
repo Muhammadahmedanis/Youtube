@@ -5,19 +5,21 @@ import styled from 'styled-components'
 import { loginFailure, loginStart, loginSuccess } from '../../redux/userSlice.js';
 import { auth, provider } from '../firebase.js';
 import { signInWithPopup } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 function Signin() {
     const[name, setName] = useState("");
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     const handleLogin = async() => {
         dispatch(loginStart());
         try {
             const res = await axios.post("api/auth/signin", {name, password});
             dispatch(loginSuccess(res.data));
             console.log(res.data);
+            navigate('/')
         } catch (error) {
             console.log(error);
             dispatch(loginFailure());
@@ -43,17 +45,18 @@ function Signin() {
   return (
     <Container>
         <Wrapper>
-            <Title>Sign in</Title>
+            <Title>Sign Up</Title>
             <SubTitle>To countinue to  Youtube</SubTitle>
-            <Input placeholder='username' onChange={e => setName(e.target.value)} />
-            <Input type='password' placeholder='password' onChange={e => setPassword(e.target.value)}/>
-            <Button onClick={handleLogin}>Sign in</Button>
-            <Title>or</Title>
-            <Button onClick={signinWithGoogle}>Sign in with Google</Button>
             <Input placeholder='username'  onChange={e => setName(e.target.value)}/>
             <Input placeholder='email' onChange={e => setEmail(e.target.value)}/>
             <Input type='password' placeholder='password' onChange={e => setPassword(e.target.value)}/>
             <Button>Sign up</Button>
+            <Title>or</Title>
+            <Button onClick={signinWithGoogle}>Countinue with Google</Button>
+            <Title>or</Title>
+            <Input placeholder='username' onChange={e => setName(e.target.value)} />
+            <Input type='password' placeholder='password' onChange={e => setPassword(e.target.value)}/>
+            <Button onClick={handleLogin}>Sign in</Button>
         </Wrapper> 
         <More>
             English(USA)
@@ -86,7 +89,7 @@ const Wrapper = styled.div`
     border:1px solid ${({theme}) => theme.soft};
     border-radius: 7px;
     padding: 15px 40px;
-    // gap: 10px;
+    width: 300px;
 `
 
 const Title = styled.h1`
@@ -111,12 +114,13 @@ const Input = styled.input`
 `
 
 const Button = styled.button`
-    border-radius: 3px;
+    border-radius: 5px;
     border: none;
     padding: 10px 20px;
     font-weight: 600;
     cursor: pointer;
     margin: 5px 0;
+    width: 200px;
     background-color: ${({theme}) => theme.soft};
     color: ${({theme}) => theme.textSoft};
 `
