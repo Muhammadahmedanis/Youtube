@@ -58,15 +58,14 @@ Mongoose for schema modeling and query building.
   npm install
 ```
 3: Set up Environment Variables:
-
 - Create a .env file based on .env.example and configure database connection details, JWT secret, etc.
-4:Run the application:
+4: Run the application:
 ```bash
   npm run dev
 ```
 5:Access Platform:
 
-- Open your browser and go to http://localhost:5173.
+- Open your browser and go to http://localhost:5173
     
 ## Technologies Used:
 
